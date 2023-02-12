@@ -1176,6 +1176,7 @@ namespace WHIG
             { "A113", new string[]{ "A21", "N1" } },
             { "Aa8&D", new string[]{ "Aa8", "I10" } },
             { "B2&Z2", new string[]{ "B2", "Z2" } },
+            { "d&w", new string[]{ "D46", "G43" } },
             { "ir&n&f", new string[]{ "D4", "N35", "I9" } },
             { "ir&n&k", new string[]{ "D4", "N35", "V31" } },
             { "ir&r&f", new string[]{ "D4", "D21", "I9" } },
