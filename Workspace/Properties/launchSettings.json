@@ -2,8 +2,8 @@
   "profiles": {
     "wikihiero-image-generator": {
       "commandName": "Project",
-      "commandLineArgs": "-js",
-      "workingDirectory": "C:\\code\\kemetic\\tuxscribe_colour_svg\\png"
+      "commandLineArgs": "-js -o=../../out/",
+      "workingDirectory": "..\\recoloured-tuxscribe-hieroglyphs\\png"
     }
   }
 }
