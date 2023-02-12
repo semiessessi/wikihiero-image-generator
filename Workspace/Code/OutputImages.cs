@@ -1128,8 +1128,18 @@ namespace WHIG
 
         public static readonly Dictionary<string, string> Replacements = new Dictionary<string, string>
         {
+            { "A1s", "A1" },
+            { "A2s", "A2" },
+            { "G17s", "G17" },
             { "D&t&N17", "I11A" },
             { "nswt&bity", "L2A" }
+        };
+
+        public static readonly HashSet<string> LargeInStack = new HashSet<string>
+        {
+            "A1",
+            "G43",
+            "I10"
         };
 
         public static readonly Dictionary<string, string[]> Stacks = new Dictionary<string, string[]>
@@ -1137,6 +1147,12 @@ namespace WHIG
             { "a&A1", new string[]{ "D36", "A1" } },
             //{ "a&b&t", new string[]{ "D36", "D58", "X1" } },
             { "a&D", new string[]{ "D36", "I10" } },
+            { "a&n&D", new string[]{ "D36", "N35", "I10" } },
+            { "ir&n&f", new string[]{ "D4", "N35", "I9" } },
+            { "ir&n&k", new string[]{ "D4", "N35", "V31" } },
+            { "ir&r&f", new string[]{ "D4", "D21", "I9" } },
+            { "ir&t&f", new string[]{ "D4", "X1", "I9" } },
+            { "ir&t&n", new string[]{ "D4", "X1", "N35" } },
             { "r&A1", new string[]{ "D21", "A1" } },
             { "r&a&k", new string[]{ "D21", "D36", "V31" } },
             { "r&a&t", new string[]{ "D21", "D36", "X1" } },

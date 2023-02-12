@@ -29,10 +29,20 @@ namespace WHIG
                 return false;
             }
 
+            int heightCount = 0;
+            foreach(string symbol in inputSymbols)
+            {
+                if(OutputImages.LargeInStack.Contains(symbol))
+                {
+                    ++heightCount;
+                }
+                ++heightCount;
+            }
+
             // use the target size to guide the image sizing
             int width = Program.TargetSizePixels;
             int height = Program.TargetSizePixels;
-            int individualHeight = height / images.Count;
+            int individualHeight = height / heightCount;
 
             Image newImage = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(newImage);
@@ -49,17 +59,41 @@ namespace WHIG
                     targetWidth = width >> 1;
                     targetHeight = (int)(targetWidth * ratio);
                 }
-                else if(image.Width > image.Height)
+                else if (inputSymbols[index] == "D36") // a needs a little scaling.
+                {
+                    float ratio = (float)image.Height / (float)image.Width;
+                    targetWidth = (int)((float)width * 0.9f);
+                    targetHeight = (int)(targetWidth * ratio);
+                }
+                else if (image.Width > image.Height)
                 {
                     float ratio = (float)image.Height / (float)image.Width;
                     targetWidth = width;
                     targetHeight = (int)(targetWidth * ratio);
                 }
 
+                int adjust = (individualHeight - targetHeight) / 2;
+                if (OutputImages.LargeInStack.Contains(inputSymbols[index]))
+                {
+                    targetWidth <<= 1;
+                    targetHeight <<= 1;
+                    adjust = (2 * individualHeight - targetHeight) / 2;
+                }
+
+                if((index > 0) && (inputSymbols[index - 1] == "D36"))
+                {
+                    // add a little space after a because it is a pain.
+                    adjust += 1;
+                }
+
                 g.DrawImage(image, new Rectangle(
-                    new Point((width - targetWidth) / 2, y + (individualHeight - targetHeight) / 2),
+                    new Point((width - targetWidth) / 2, y + adjust),
                     new Size(targetWidth, targetHeight)));
                 y += individualHeight;
+                if (OutputImages.LargeInStack.Contains(inputSymbols[index]))
+                {
+                    y += individualHeight;
+                }
                 image.Dispose();
 
                 ++index;
