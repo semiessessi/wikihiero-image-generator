@@ -53,7 +53,8 @@ namespace WHIG
             {
                 int targetHeight = individualHeight;
                 int targetWidth = (int)((float)targetHeight * (float)image.Width / (float)image.Height);
-                if (inputSymbols[index] == "X1")
+                if ((inputSymbols[index] == "X1")
+                    || (inputSymbols[index] == "Q3"))
                 {
                     float ratio = (float)image.Height / (float)image.Width;
                     targetWidth = width >> 1;
@@ -63,6 +64,12 @@ namespace WHIG
                 {
                     float ratio = (float)image.Height / (float)image.Width;
                     targetWidth = (int)((float)width * 0.9f);
+                    targetHeight = (int)(targetWidth * ratio);
+                }
+                else if (inputSymbols[index] == "Aa1") // x needs a little scaling.
+                {
+                    float ratio = (float)image.Height / (float)image.Width;
+                    targetWidth = (int)((float)width * 0.4f);
                     targetHeight = (int)(targetWidth * ratio);
                 }
                 else if (image.Width > image.Height)
@@ -83,7 +90,22 @@ namespace WHIG
                 if((index > 0) && (inputSymbols[index - 1] == "D36"))
                 {
                     // add a little space after a because it is a pain.
-                    adjust += 1;
+                    adjust += (int)(Program.TargetSizePixels / 40.0);
+                }
+
+                else if ((index > 0)
+                    && (inputSymbols[index - 1] == "N35")
+                    && (inputSymbols[index] == "Aa1"))
+                {
+                    // remove before final x here...
+                    adjust -= (int)(2.0 * Program.TargetSizePixels / 40.0);
+                }
+                else if ((index > 0)
+                    && (inputSymbols[index - 1] == "Aa1")
+                    && (inputSymbols[index] == "D21"))
+                {
+                    // add space after x for r
+                    adjust += (int)(2.0 * Program.TargetSizePixels / 40.0);
                 }
 
                 g.DrawImage(image, new Rectangle(
