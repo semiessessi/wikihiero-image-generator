@@ -76,6 +76,7 @@ namespace WHIG
                         if (ImageResize.ProcessImage(testPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
                         {
                             MarkDone(name);
+                            continue;
                         }
                     }
 
@@ -87,6 +88,15 @@ namespace WHIG
                             MarkDone(name);
                             continue;
                         }
+                    }
+                }
+
+                if (Stacks.ContainsKey(name))
+                {
+                    if (ImageResize.ProcessStack(Stacks[name], Program.OutputPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
+                    {
+                        MarkDone(name);
+                        continue;
                     }
                 }
             }
@@ -1125,9 +1135,18 @@ namespace WHIG
         public static readonly Dictionary<string, string[]> Stacks = new Dictionary<string, string[]>
         {
             { "a&A1", new string[]{ "D36", "A1" } },
-            { "a&b&t", new string[]{ "D36", "D58", "X1" } },
-                //"a&b&t",
-                //"a&D",
+            //{ "a&b&t", new string[]{ "D36", "D58", "X1" } },
+            { "a&D", new string[]{ "D36", "I10" } },
+            { "r&A1", new string[]{ "D21", "A1" } },
+            { "r&a&k", new string[]{ "D21", "D36", "V31" } },
+            { "r&a&t", new string[]{ "D21", "D36", "X1" } },
+            { "r&f&n", new string[]{ "D21", "I9", "N35" } },
+            { "r&n&f", new string[]{ "D21", "N35", "I9" } },
+            { "r&r", new string[]{ "D21", "D21" } },
+            { "r&t", new string[]{ "D21", "X1" } },
+            { "Y1&n&f", new string[]{ "Y1", "N35", "I9" } },
+            { "z&A1", new string[]{ "O34", "A1" } },
+            { "z&w", new string[]{ "O34", "G43" } },
         };
     }
 }
