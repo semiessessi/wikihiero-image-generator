@@ -107,6 +107,13 @@ namespace WHIG
                     // add space after x for r
                     adjust += (int)(2.0 * Program.TargetSizePixels / 40.0);
                 }
+                else if ((index > 0)
+                    && (inputSymbols[index - 1] == "Q3")
+                    && (inputSymbols[index] == "O34"))
+                {
+                    // add space after p for z
+                    adjust += (int)(4.0 * Program.TargetSizePixels / 40.0);
+                }
 
                 g.DrawImage(image, new Rectangle(
                     new Point((width - targetWidth) / 2, y + adjust),
