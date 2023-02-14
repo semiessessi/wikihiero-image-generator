@@ -91,7 +91,23 @@ namespace WHIG
                     }
                 }
 
-                if (Stacks.ContainsKey(name))
+                if (RotatedLeft.ContainsKey(name))
+                {
+                    if (ImageResize.ProcessRotateLeft(Path.Join(Program.OutputPath, "hiero_" + RotatedLeft[name] + ".png"), Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
+                    {
+                        MarkDone(name);
+                        continue;
+                    }
+                }
+                else if (RotatedRight.ContainsKey(name))
+                {
+                    if (ImageResize.ProcessRotateRight(Path.Join(Program.OutputPath, "hiero_" + RotatedRight[name] + ".png"), Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
+                    {
+                        MarkDone(name);
+                        continue;
+                    }
+                }
+                else if (Stacks.ContainsKey(name))
                 {
                     if (ImageResize.ProcessStack(Stacks[name], Program.OutputPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
                     {
@@ -1134,11 +1150,12 @@ namespace WHIG
             { "B1s", "B1" },
             { "D&t&N17", "I11A" },
             { "D58s", "D58" },
+            { "F31s", "F31" },
             { "G1s", "G1" },
             { "G5s", "G5" },
             { "G17s", "G17" },
             { "G43s", "G43" },
-            { "F31s", "F31" },
+            { "I1S", "I1" },
             { "M12s", "M12" },
             { "M17s", "M17" },
             { "M23s", "M23" },
@@ -1164,10 +1181,33 @@ namespace WHIG
             //"Aa1"
         };
 
+        public static readonly Dictionary<string, string> RotatedLeft = new Dictionary<string, string>
+        {
+            { "P8H", "P8" },
+        };
+
+        public static readonly Dictionary<string, string> RotatedRight = new Dictionary<string, string>
+        {
+            { "T8B", "T8A" },
+            { "O29V", "O29" },
+        };
+
+        public static readonly Dictionary<string, string[]> SmallAndTallStacks = new Dictionary<string, string[]>
+        {
+            { "t&H", new string[]{ "X1", "V28" } },
+            { "t&I12", new string[]{ "X1", "I12" } },
+            { "t&M30", new string[]{ "X1", "M30" } },
+        };
+
+        public static readonly Dictionary<string, string[]> StackOnRow = new Dictionary<string, string[]>
+        {
+            { "a&b&t", new string[]{ "D36", "D58", "X1" } },
+            { "a&r&t", new string[]{ "D36", "D21", "X1" } },
+        };
+
         public static readonly Dictionary<string, string[]> Stacks = new Dictionary<string, string[]>
         {
             { "a&A1", new string[]{ "D36", "A1" } },
-            //{ "a&b&t", new string[]{ "D36", "D58", "X1" } },
             { "a&D", new string[]{ "D36", "I10" } },
             { "a&F51a&Z2", new string[]{ "D36", "F51A", "Z2" } },
             { "a&n&D", new string[]{ "D36", "N35", "I10" } },
@@ -1213,6 +1253,7 @@ namespace WHIG
             { "Y1&n&f", new string[]{ "Y1", "N35", "I9" } },
             { "z&A1", new string[]{ "O34", "A1" } },
             { "z&x&r", new string[]{ "O34", "Aa1", "D21" } },
+            { "z&X&k", new string[]{ "O34", "F32", "V31" } },
             { "z&w", new string[]{ "O34", "G43" } },
             { "Z6&A1", new string[]{ "Z6", "A1" } },
         };

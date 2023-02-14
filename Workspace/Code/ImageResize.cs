@@ -10,6 +10,54 @@ namespace WHIG
 {
     public static class ImageResize
     {
+        public static bool ProcessRotateRight(string inPath, string outPath)
+        {
+            Image image = Image.FromFile(inPath);
+            if (image == null)
+            {
+                return false;
+            }
+
+            Image newImage = new Bitmap(image);
+
+            newImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+
+            if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(outPath));
+            }
+
+            newImage.Save(outPath);
+            newImage.Dispose();
+            return true;
+        }
+
+        public static bool ProcessRotateLeft(string inPath, string outPath)
+        {
+            Image image = Image.FromFile(inPath);
+            if (image == null)
+            {
+                return false;
+            }
+
+            Image newImage = new Bitmap(image);
+
+            newImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
+
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+
+            if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(outPath));
+            }
+
+            newImage.Save(outPath);
+            newImage.Dispose();
+            return true;
+        }
+
         public static bool ProcessStack(string[] inputSymbols, string outDirectory, string outPath)
         {
             List<Image> images = new List<Image>();
