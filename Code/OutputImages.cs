@@ -177,11 +177,12 @@ namespace WHIG
                 }
             }
 
-            string parameters = "-nc -o7 -force -fix -clobber -strip \"all\" ";
+            string parameters = "-nc -o7 -clobber -quiet -strip \"all\" ";
 
             foreach (string name in DoneSet)
             {
                 string path = Path.Join(Program.OutputPath, "hiero_" + name + ".png");
+                Console.WriteLine(path + "...");
                 Process process = Process.Start(command, parameters + path);
                 process.WaitForExit();
             }
