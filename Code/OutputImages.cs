@@ -119,6 +119,16 @@ namespace WHIG
                     }
                 }
 
+                if (TallAndSmallStacks.ContainsKey(name))
+                {
+                    if (ImageResize.ProcessTallAndSmallStack(TallAndSmallStacks[name],
+                        Program.OutputPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
+                    {
+                        MarkDone(name);
+                        continue;
+                    }
+                }
+
                 if (Stacks.ContainsKey(name))
                 {
                     if (ImageResize.ProcessStack(Stacks[name], Program.OutputPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
@@ -1206,10 +1216,18 @@ namespace WHIG
 
         public static readonly Dictionary<string, string[]> SmallAndTallStacks = new Dictionary<string, string[]>
         {
+            { "t&A", new string[]{ "X1", "G1" } },
+            { "t&A19", new string[]{ "X1", "A19" } },
             { "t&H", new string[]{ "X1", "V28" } },
             { "t&I12", new string[]{ "X1", "I12" } },
             { "t&M30", new string[]{ "X1", "M30" } },
             { "t&s", new string[]{ "X1", "S29" } },
+            { "t&sti", new string[]{ "X1", "F29" } },
+        };
+
+        public static readonly Dictionary<string, string[]> TallAndSmallStacks = new Dictionary<string, string[]>
+        {
+            { "sti&t", new string[]{ "F29", "X1" } },
         };
 
         public static readonly Dictionary<string, string[]> StackOnRow = new Dictionary<string, string[]>
