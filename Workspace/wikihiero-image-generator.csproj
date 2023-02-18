@@ -22,4 +22,8 @@
     <Folder Include="Code\" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /s /y $(TargetDir) $(SolutionDir)..\Build\" />
+  </Target>
+
 </Project>
