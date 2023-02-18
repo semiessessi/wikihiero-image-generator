@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -161,6 +162,29 @@ namespace WHIG
             DoneSet.Add(name);
             UndoneSet.Remove(name);
             Console.WriteLine("(" + DoneSet.Count + "/" + FullList.Length + ") Generated image for " + name + "...");
+        }
+
+        public static void RunOptiPNG()
+        {
+            string command = "optipng.exe";
+            if (File.Exists("optipng.exe") == false)
+            {
+                command = "..\\optipng.exe";
+                if(File.Exists("..\\optipng.exe") == false)
+                {
+                    Console.WriteLine("Could not find optipng.exe!");
+                    Console.WriteLine("You will need to make sure that it is added to your PATH for this feature to work.");
+                }
+            }
+
+            string parameters = "-nc -o7 -strip \"all\" ";
+
+            foreach (string name in DoneSet)
+            {
+                string path = Path.Join(Program.OutputPath, "hiero_" + name + ".png");
+                Process process = Process.Start(command, parameters + path);
+                process.WaitForExit();
+            }
         }
 
         public static void FinalReport()

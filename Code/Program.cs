@@ -10,6 +10,7 @@ namespace WHIG
         public static string InputPath = ".";
         public static bool SimpleMapping = false;
         public static bool GenerateBase64JS = false;
+        public static bool OptiPNG = false;
 
         static void Main(string[] args)
         {
@@ -35,10 +36,15 @@ namespace WHIG
 
         private static void Finish()
         {
+            if(OptiPNG)
+            {
+                Console.WriteLine("Optimising generated files...");
+                OutputImages.RunOptiPNG();
+            }
             if (GenerateBase64JS)
             {
                 Console.WriteLine("Outputting JS lookup table...");
-                File.WriteAllText(Path.Combine(OutputPath, "out.js"), OutputBase64JS.CreateJS());
+                File.WriteAllText(Path.Combine(OutputPath, "out.js"), OutputBase64JS.CreateJS(OptiPNG));
             }
 
             OutputImages.FinalReport();
@@ -97,6 +103,12 @@ namespace WHIG
                         Console.WriteLine("missing '=' in argument: \"" + arg + "\"");
                     }
                 }
+                else if (arg.StartsWith("-optipng")
+                    || arg.StartsWith("--optipng")
+                    || arg.StartsWith("/optipng"))
+                {
+                    OptiPNG = true;
+                }
                 else if (arg.StartsWith("-o")
                     || arg.StartsWith("-output")
                     || arg.StartsWith("--o")
@@ -126,7 +138,7 @@ namespace WHIG
 
         private static void DisplayHelp()
         {
-            Console.WriteLine("TODO: ...");
+            Console.WriteLine("usage: wikihiero-image-generator -output=<path> -size=<pixels> [-help] [-js] [-optipng]");
         }
     }
 }

@@ -22,7 +22,7 @@ namespace WHIG
 
             newImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
-            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage, !Program.OptiPNG);
 
             if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
             {
@@ -46,7 +46,7 @@ namespace WHIG
 
             newImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
 
-            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage, !Program.OptiPNG);
 
             if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
             {
@@ -113,7 +113,7 @@ namespace WHIG
             images[0].Dispose();
             images[1].Dispose();
 
-            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage, !Program.OptiPNG);
 
             if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
             {
@@ -181,7 +181,7 @@ namespace WHIG
             images[0].Dispose();
             images[1].Dispose();
 
-            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage, !Program.OptiPNG);
 
             if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
             {
@@ -248,7 +248,7 @@ namespace WHIG
             images[0].Dispose();
             images[1].Dispose();
 
-            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage, !Program.OptiPNG);
 
             if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
             {
@@ -423,7 +423,7 @@ namespace WHIG
                 ++index;
             }
 
-            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage, !Program.OptiPNG);
 
             if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
             {
@@ -467,7 +467,7 @@ namespace WHIG
             g.DrawImage(image, new Rectangle(new Point(0, 0), new Size(targetWidth, targetHeight)));
             image.Dispose();
 
-            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage, !Program.OptiPNG);
 
             if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
             {
