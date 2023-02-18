@@ -99,7 +99,8 @@ namespace WHIG
                         continue;
                     }
                 }
-                else if (RotatedRight.ContainsKey(name))
+                
+                if (RotatedRight.ContainsKey(name))
                 {
                     if (ImageResize.ProcessRotateRight(Path.Join(Program.OutputPath, "hiero_" + RotatedRight[name] + ".png"), Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
                     {
@@ -107,7 +108,18 @@ namespace WHIG
                         continue;
                     }
                 }
-                else if (Stacks.ContainsKey(name))
+
+                if (SmallAndTallStacks.ContainsKey(name))
+                {
+                    if (ImageResize.ProcessSmallAndTallStack(SmallAndTallStacks[name],
+                        Program.OutputPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
+                    {
+                        MarkDone(name);
+                        continue;
+                    }
+                }
+
+                if (Stacks.ContainsKey(name))
                 {
                     if (ImageResize.ProcessStack(Stacks[name], Program.OutputPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
                     {
@@ -1197,6 +1209,7 @@ namespace WHIG
             { "t&H", new string[]{ "X1", "V28" } },
             { "t&I12", new string[]{ "X1", "I12" } },
             { "t&M30", new string[]{ "X1", "M30" } },
+            { "t&s", new string[]{ "X1", "S29" } },
         };
 
         public static readonly Dictionary<string, string[]> StackOnRow = new Dictionary<string, string[]>

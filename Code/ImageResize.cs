@@ -58,6 +58,74 @@ namespace WHIG
             return true;
         }
 
+        public static bool ProcessSmallAndTallStack(string[] inputSymbols, string outDirectory, string outPath)
+        {
+            List<Image> images = new List<Image>();
+            foreach (string inPath in inputSymbols)
+            {
+                string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
+                Image image = Image.FromFile(inputPath);
+                if (image == null)
+                {
+                    return false;
+                }
+                images.Add(image);
+            }
+
+            if (images.Count == 0)
+            {
+                return false;
+            }
+
+            if (images.Count > 2)
+            {
+                return false;
+            }
+
+            // use the target size to guide the image sizing
+            // have a top-third and a bottom-two-thirds...
+            int width = (int)(Program.TargetSizePixels * 0.33333f);
+            int height = Program.TargetSizePixels;
+
+            Image newImage = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(newImage);
+
+            // this assumes the loaf, X1, where it is always flatter than square.
+            int smallHeight = (int)((float)width * ((float)images[0].Height / (float)images[0].Width));
+            g.DrawImage(images[0], new Rectangle(
+                   new Point(0, (width - smallHeight) / 2),
+                   new Size(width, smallHeight)));
+
+            // this assumes a tall sign, always taller than the rectangle...
+            int tallWidth = (int)((float)2 * width * ((float)images[1].Width / (float)images[1].Height));
+            int tallHeight = 2 * width;
+            if(2 * images[1].Width > images[1].Height)
+            {
+                // the prportions need fixing the other way...
+                tallWidth = width;
+                tallHeight = (int)((float)width * ((float)images[1].Height / (float)images[1].Width));
+            }
+
+            g.DrawImage(images[1], new Rectangle(
+                   new Point((width - tallWidth) / 2, (2 * width - tallHeight) / 2),
+                   new Size(tallWidth, tallHeight)));
+
+            images[0].Dispose();
+            images[1].Dispose();
+
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+
+            if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(outPath));
+            }
+
+            newImage.Save(outPath);
+            newImage.Dispose();
+
+            return true;
+        }
+
         public static bool ProcessStack(string[] inputSymbols, string outDirectory, string outPath)
         {
             List<Image> images = new List<Image>();
