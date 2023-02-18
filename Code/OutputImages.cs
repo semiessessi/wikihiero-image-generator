@@ -1300,6 +1300,7 @@ namespace WHIG
             { "t&sti", new string[] { "X1", "F29" } },
             { "wn&n&t", new string[] { "E34", "N35", "X1" } },
             { "wr&r&t", new string[] { "G36", "D21", "X1" } },
+            { "w&&t", new string[] { "G43", "X1" } },
             { "x&f&t", new string[]{ "Aa1", "I9", "X1" } },
             { "x&r&t", new string[]{ "Aa1", "D21", "X1" } },
             { "Y1&A1", new string[]{ "Y1", "A1" } },
