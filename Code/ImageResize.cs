@@ -304,7 +304,7 @@ namespace WHIG
             {
                 // the proportions need fixing the other way...
                 smallHeight = smallWidth;
-                smallWidth = (int)((float)smallHeight * ((float)images[1].Height / (float)images[1].Width));
+                smallWidth = (int)((float)smallHeight * ((float)images[1].Width / (float)images[1].Height));
             }
 
             g.DrawImage(images[1], new Rectangle(

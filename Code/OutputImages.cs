@@ -1279,6 +1279,7 @@ namespace WHIG
             { "m&t", new string[] { "G17", "X1" } },
             { "w&t", new string[] { "G43", "X1" } },
             { "w&y", new string[] { "G43", "Z4" } },
+            { "t&T30", new string[] { "T30", "X1" } },
         };
 
         public static readonly Dictionary<string, string[]> SimpleTopRightBig = new()
@@ -1287,6 +1288,7 @@ namespace WHIG
             { "D&ra", new string[] { "I10", "N5" } },
             { "D&t", new string[] { "I10", "X1" } },
             { "D&z", new string[] { "I10", "O34" } },
+            { "stp&s", new string[] { "U19", "O34" } }, // TODO: this missing the piece of wood being carved with the adze
         };
 
         public static readonly Dictionary<string, string[]> SmallAndTallStacks = new()
