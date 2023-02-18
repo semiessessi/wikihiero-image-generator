@@ -1164,7 +1164,7 @@ namespace WHIG
                 "Z98A"
             };
 
-        public static readonly Dictionary<string, string> Replacements = new Dictionary<string, string>
+        public static readonly Dictionary<string, string> Replacements = new()
         {
             { "A1s", "A1" },
             { "A2s", "A2" },
@@ -1192,29 +1192,39 @@ namespace WHIG
             { "Y1V", "Y1A" }
         };
 
-        public static readonly HashSet<string> LargeInStack = new HashSet<string>
+        public static readonly HashSet<string> LargeInStack = new()
         {
             "A1",
             "A21",
             "B1",
             "B2",
+            "E34",
+            "F29",
+            "G17",
+            "G36",
             "G43",
             "I10",
             //"Aa1"
         };
 
-        public static readonly Dictionary<string, string> RotatedLeft = new Dictionary<string, string>
+        public static readonly Dictionary<string, string> RotatedLeft = new()
         {
             { "P8H", "P8" },
         };
 
-        public static readonly Dictionary<string, string> RotatedRight = new Dictionary<string, string>
+        public static readonly Dictionary<string, string> RotatedRight = new()
         {
             { "T8B", "T8A" },
             { "O29V", "O29" },
         };
 
-        public static readonly Dictionary<string, string[]> SmallAndTallStacks = new Dictionary<string, string[]>
+        public static readonly Dictionary<string, string[]> BottomLeftTopRight = new()
+        {
+            { "m&t", new string[] { "G17", "X1" } },
+            { "w&t", new string[] { "G43", "X1" } },
+        };
+
+        public static readonly Dictionary<string, string[]> SmallAndTallStacks = new()
         {
             { "t&A", new string[]{ "X1", "G1" } },
             { "t&A19", new string[]{ "X1", "A19" } },
@@ -1222,21 +1232,21 @@ namespace WHIG
             { "t&I12", new string[]{ "X1", "I12" } },
             { "t&M30", new string[]{ "X1", "M30" } },
             { "t&s", new string[]{ "X1", "S29" } },
-            { "t&sti", new string[]{ "X1", "F29" } },
         };
 
-        public static readonly Dictionary<string, string[]> TallAndSmallStacks = new Dictionary<string, string[]>
+        public static readonly Dictionary<string, string[]> TallAndSmallStacks = new()
         {
-            { "sti&t", new string[]{ "F29", "X1" } },
+            { "b&t", new string[]{ "D58", "X1" } },
         };
 
-        public static readonly Dictionary<string, string[]> StackOnRow = new Dictionary<string, string[]>
+        public static readonly Dictionary<string, string[]> StackOnRow = new()
         {
             { "a&b&t", new string[]{ "D36", "D58", "X1" } },
             { "a&r&t", new string[]{ "D36", "D21", "X1" } },
+            { "z&A1&Z1", new string[] { "O34", "A1", "Z1" } },
         };
 
-        public static readonly Dictionary<string, string[]> Stacks = new Dictionary<string, string[]>
+        public static readonly Dictionary<string, string[]> Stacks = new()
         {
             { "a&A1", new string[]{ "D36", "A1" } },
             { "a&D", new string[]{ "D36", "I10" } },
@@ -1250,14 +1260,22 @@ namespace WHIG
             { "d&w", new string[]{ "D46", "G43" } },
             { "f&n&d", new string[]{ "I9", "N35", "D46" } },
             { "f&r&t", new string[]{ "I9", "D21", "X1" } },
+            { "H8W", new string[]{ "X1", "H8", "Z2" } },
             { "ir&n&f", new string[]{ "D4", "N35", "I9" } },
             { "ir&n&k", new string[]{ "D4", "N35", "V31" } },
             { "ir&r&f", new string[]{ "D4", "D21", "I9" } },
             { "ir&t&f", new string[]{ "D4", "X1", "I9" } },
             { "ir&t&n", new string[]{ "D4", "X1", "N35" } },
+            { "m&&t", new string[] { "G17", "X1" } },
+            { "m&a", new string[] { "G17", "D36" } },
+            { "m&f", new string[] { "G17", "I9" } },
+            { "m&n", new string[] { "G17", "N35" } },
+            { "m&r", new string[] { "G17", "D21" } },
             { "mn&n&t", new string[]{ "Y5", "N35", "Z1" } },
             { "mn&n&x", new string[]{ "Y5", "N35", "Aa1" } },
             { "mr&r&r", new string[]{ "U7", "D21", "D21" } },
+            { "N35B", new string[] { "N35", "N35", "N35" } },
+            { "N35C", new string[] { "N35", "N35" } },
             { "n&A1", new string[]{ "N35", "A1" } },
             { "n&D", new string[]{ "N35", "I10" } },
             { "n&f&n", new string[]{ "N35", "I9", "N35" } },
@@ -1277,7 +1295,11 @@ namespace WHIG
             { "r&n&f", new string[]{ "D21", "N35", "I9" } },
             { "r&r", new string[]{ "D21", "D21" } },
             { "r&t", new string[]{ "D21", "X1" } },
+            { "sti&t", new string[] { "F29", "X1" } },
             { "t&r&f", new string[]{ "X1", "D21", "I9" } },
+            { "t&sti", new string[] { "X1", "F29" } },
+            { "wn&n&t", new string[] { "E34", "N35", "X1" } },
+            { "wr&r&t", new string[] { "G36", "D21", "X1" } },
             { "x&f&t", new string[]{ "Aa1", "I9", "X1" } },
             { "x&r&t", new string[]{ "Aa1", "D21", "X1" } },
             { "Y1&A1", new string[]{ "Y1", "A1" } },

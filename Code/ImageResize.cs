@@ -250,6 +250,24 @@ namespace WHIG
                     targetWidth = (int)((float)width * 0.9f);
                     targetHeight = (int)(targetWidth * ratio);
                 }
+                else if (inputSymbols[index] == "E34") // a needs a little scaling.
+                {
+                    float ratio = (float)image.Height / (float)image.Width;
+                    targetWidth = (int)((float)width * 0.45f);
+                    targetHeight = (int)(targetWidth * ratio);
+                }
+                else if (inputSymbols[index] == "F29") // a needs a little scaling.
+                {
+                    float ratio = (float)image.Height / (float)image.Width;
+                    targetWidth = (int)((float)width * 0.3f);
+                    targetHeight = (int)(targetWidth * ratio);
+                }
+                else if (inputSymbols[index] == "G36") // a needs a little scaling.
+                {
+                    float ratio = (float)image.Height / (float)image.Width;
+                    targetWidth = (int)((float)width * 0.35f);
+                    targetHeight = (int)(targetWidth * ratio);
+                }
                 else if (inputSymbols[index] == "Aa1") // x needs a little scaling.
                 {
                     float ratio = (float)image.Height / (float)image.Width;
