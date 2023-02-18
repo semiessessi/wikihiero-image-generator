@@ -178,13 +178,14 @@ namespace WHIG
             }
 
             string parameters = "-nc -o7 -clobber -quiet -strip \"all\" ";
-
+            int i = 0;
             foreach (string name in DoneSet)
             {
                 string path = Path.Join(Program.OutputPath, "hiero_" + name + ".png");
-                Console.WriteLine(path + "...");
+                Console.WriteLine("(" + i + "/" + DoneSet.Count + ") Optimising " + path + "...");
                 Process process = Process.Start(command, parameters + path);
                 process.WaitForExit();
+                ++i;
             }
         }
 
