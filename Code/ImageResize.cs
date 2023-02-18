@@ -194,11 +194,83 @@ namespace WHIG
             return true;
         }
 
+        public static bool ProcessBottomLeftTopRight(string[] inputSymbols, string outDirectory, string outPath)
+        {
+            List<Image> images = new List<Image>();
+            foreach (string inPath in inputSymbols)
+            {
+                string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
+                Image image = Image.FromFile(inputPath);
+                if (image == null)
+                {
+                    return false;
+                }
+                images.Add(image);
+            }
+
+            if (images.Count == 0)
+            {
+                return false;
+            }
+
+            if (images.Count > 2)
+            {
+                return false;
+            }
+
+            int width = Program.TargetSizePixels;
+            int height = Program.TargetSizePixels;
+
+            Image newImage = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(newImage);
+
+            // this assumes the loaf, X1, where it is always flatter than square.
+            int smallWidth = Program.TargetSizePixels >> 1;
+            int smallHeight = (int)((float)smallWidth * ((float)images[1].Height / (float)images[1].Width));
+            g.DrawImage(images[1], new Rectangle(
+                   new Point(width - smallWidth, 0),
+                   new Size(smallWidth, smallHeight)));
+
+            // this assumes a tall sign...
+            int tallWidth = (int)((float)width * ((float)images[0].Width / (float)images[0].Height));
+            int tallHeight = width;
+            if (images[0].Width > images[0].Height)
+            {
+                // the proportions need fixing the other way...
+                tallWidth = width;
+                tallHeight = (int)((float)width * ((float)images[0].Height / (float)images[0].Width));
+            }
+
+            g.DrawImage(images[0], new Rectangle(
+                   new Point(0, height - tallHeight),
+                   new Size(tallWidth, tallHeight)));
+
+            images[0].Dispose();
+            images[1].Dispose();
+
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage);
+
+            if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(outPath));
+            }
+
+            newImage.Save(outPath);
+            newImage.Dispose();
+
+            return true;
+        }
+
         public static bool ProcessStack(string[] inputSymbols, string outDirectory, string outPath)
         {
             List<Image> images = new List<Image>();
+            int z91count = 0;
             foreach(string inPath in inputSymbols)
             {
+                if(inPath == "Z91")
+                {
+                    ++z91count;
+                }
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
                 Image image = Image.FromFile(inputPath);
                 if (image == null)
@@ -225,6 +297,27 @@ namespace WHIG
 
             // use the target size to guide the image sizing
             int width = Program.TargetSizePixels;
+            // make stacks of z91 proportioned correctly..
+            switch(z91count)
+            {
+                case 3:
+                {
+                    width = (int)(width * 0.667f);
+                    break;
+                }
+                case 4:
+                {
+                    width = (int)(width * 0.5f);
+                    break;
+                }
+                case 5:
+                {
+                    width = (int)(width * 0.333f);
+                    break;
+                }
+                default:
+                    break;
+            }
             int height = Program.TargetSizePixels;
             int individualHeight = height / heightCount;
 

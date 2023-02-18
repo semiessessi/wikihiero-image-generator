@@ -27,7 +27,8 @@ namespace WHIG
                 return;
             }
 
-            OutputImages.GenerateReplacementsAndStacks();
+            OutputImages.GenerateReplacementsAndRotations();
+            OutputImages.GenerateLigaturesAndStacks();
 
             Finish();
         }

@@ -64,7 +64,7 @@ namespace WHIG
             }
         }
 
-        public static void GenerateReplacementsAndStacks()
+        public static void GenerateReplacementsAndRotations()
         {
             foreach (string name in UndoneSet)
             {
@@ -99,10 +99,26 @@ namespace WHIG
                         continue;
                     }
                 }
-                
+
                 if (RotatedRight.ContainsKey(name))
                 {
                     if (ImageResize.ProcessRotateRight(Path.Join(Program.OutputPath, "hiero_" + RotatedRight[name] + ".png"), Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
+                    {
+                        MarkDone(name);
+                        continue;
+                    }
+                }
+            }
+        }
+
+        public static void GenerateLigaturesAndStacks()
+        {
+            foreach (string name in UndoneSet)
+            {
+                if (BottomLeftTopRight.ContainsKey(name))
+                {
+                    if (ImageResize.ProcessBottomLeftTopRight(BottomLeftTopRight[name],
+                        Program.OutputPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
                     {
                         MarkDone(name);
                         continue;
@@ -1216,12 +1232,16 @@ namespace WHIG
         {
             { "T8B", "T8A" },
             { "O29V", "O29" },
+            { "Z91", "Z1" },
+            //{ "Z3A", "Z2 "},
         };
 
         public static readonly Dictionary<string, string[]> BottomLeftTopRight = new()
         {
+            { "A&t", new string[] { "G1", "X1" } },
             { "m&t", new string[] { "G17", "X1" } },
             { "w&t", new string[] { "G43", "X1" } },
+            { "w&y", new string[] { "G43", "Z4" } },
         };
 
         public static readonly Dictionary<string, string[]> SmallAndTallStacks = new()
@@ -1310,6 +1330,12 @@ namespace WHIG
             { "z&X&k", new string[]{ "O34", "F32", "V31" } },
             { "z&w", new string[]{ "O34", "G43" } },
             { "Z6&A1", new string[]{ "Z6", "A1" } },
+            { "Z92", new string[] { "Z91", "Z91" } },
+            { "Z4B", new string[] { "Z91", "Z91" } },
+            { "Z93", new string[] { "Z91", "Z91", "Z91" } },
+            { "Z3as", new string[] { "Z91", "Z91", "Z91" } },
+            { "Z94", new string[] { "Z91", "Z91", "Z91", "Z91" } },
+            { "Z95", new string[] { "Z91", "Z91", "Z91", "Z91", "Z91" } },
         };
     }
 }
