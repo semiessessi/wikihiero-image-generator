@@ -52,7 +52,7 @@ namespace WHIG
             }
 
             js.Remove(js.Length - 2, 2); // remove last comma
-            js += "\n};\n";
+            js += "};\n";
 
             return js;
         }
