@@ -177,7 +177,7 @@ namespace WHIG
                 }
             }
 
-            string parameters = "-nc -o7 -strip \"all\" ";
+            string parameters = "-nc -o7 -force -fix -strip \"all\" ";
 
             foreach (string name in DoneSet)
             {
