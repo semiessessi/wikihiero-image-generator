@@ -261,6 +261,86 @@ namespace WHIG
             return true;
         }
 
+        public static bool ProcessSimpleTopRightBig(string[] inputSymbols, string outDirectory, string outPath)
+        {
+            List<Image> images = new List<Image>();
+            foreach (string inPath in inputSymbols)
+            {
+                string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
+                Image image = Image.FromFile(inputPath);
+                if (image == null)
+                {
+                    return false;
+                }
+                images.Add(image);
+            }
+
+            if (images.Count == 0)
+            {
+                return false;
+            }
+
+            if (images.Count > 2)
+            {
+                return false;
+            }
+
+            int width = Program.TargetSizePixels;
+            int height = Program.TargetSizePixels;
+
+            Image newImage = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(newImage);
+
+            // this assumes a flat sign...
+            int smallWidth = (width * 3) / 4;
+            if ((inputSymbols[1] == "X1")
+                 || (inputSymbols[1] == "N5"))
+            {
+                smallWidth = width >> 1;
+            }
+            
+            int smallHeight = (int)((float)smallWidth * ((float)images[1].Height / (float)images[1].Width));
+            if (images[1].Width < images[1].Height)
+            {
+                // the proportions need fixing the other way...
+                smallHeight = smallWidth;
+                smallWidth = (int)((float)smallHeight * ((float)images[1].Height / (float)images[1].Width));
+            }
+
+            g.DrawImage(images[1], new Rectangle(
+                new Point(0, height - smallHeight),
+                new Size(smallWidth, smallHeight)));
+
+            // this assumes a tall sign...
+            int bigWidth = (int)((float)width * ((float)images[0].Width / (float)images[0].Height));
+            int bigHeight = width;
+            if (images[0].Width > images[0].Height)
+            {
+                // the proportions need fixing the other way...
+                bigWidth = width;
+                bigHeight = (int)((float)width * ((float)images[0].Height / (float)images[0].Width));
+            }
+
+            g.DrawImage(images[0], new Rectangle(
+                   new Point(width - bigWidth, 0),
+                   new Size(bigWidth, bigHeight)));
+
+            images[0].Dispose();
+            images[1].Dispose();
+
+            OutputBase64JS.RegisterData(Path.GetFileName(outPath), newImage, !Program.OptiPNG);
+
+            if (Directory.Exists(Path.GetDirectoryName(outPath)) == false)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(outPath));
+            }
+
+            newImage.Save(outPath);
+            newImage.Dispose();
+
+            return true;
+        }
+
         public static bool ProcessStack(string[] inputSymbols, string outDirectory, string outPath)
         {
             List<Image> images = new List<Image>();

@@ -126,6 +126,16 @@ namespace WHIG
                     }
                 }
 
+                if (SimpleTopRightBig.ContainsKey(name))
+                {
+                    if (ImageResize.ProcessSimpleTopRightBig(SimpleTopRightBig[name],
+                        Program.OutputPath, Path.Join(Program.OutputPath, "hiero_" + name + ".png")))
+                    {
+                        MarkDone(name);
+                        continue;
+                    }
+                }
+
                 if (SmallAndTallStacks.ContainsKey(name))
                 {
                     if (ImageResize.ProcessSmallAndTallStack(SmallAndTallStacks[name],
@@ -1269,6 +1279,14 @@ namespace WHIG
             { "m&t", new string[] { "G17", "X1" } },
             { "w&t", new string[] { "G43", "X1" } },
             { "w&y", new string[] { "G43", "Z4" } },
+        };
+
+        public static readonly Dictionary<string, string[]> SimpleTopRightBig = new()
+        {
+            { "D&d", new string[] { "I10", "D46" } },
+            { "D&ra", new string[] { "I10", "N5" } },
+            { "D&t", new string[] { "I10", "X1" } },
+            { "D&z", new string[] { "I10", "O34" } },
         };
 
         public static readonly Dictionary<string, string[]> SmallAndTallStacks = new()
