@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace WHIG
 {
+#pragma warning disable CA1416 // Validate platform compatibility
+
     public static class OutputBase64JS
     {
         public static void RegisterData(string name, Image data, bool convertImmediately)
@@ -20,7 +22,7 @@ namespace WHIG
             string base64String = "";
             if (convertImmediately)
             {
-                MemoryStream m = new MemoryStream();
+                MemoryStream m = new();
                 data.Save(m, System.Drawing.Imaging.ImageFormat.Png);
                 byte[] imageBytes = m.ToArray();
 
@@ -51,12 +53,14 @@ namespace WHIG
                 }
             }
 
-            js.Remove(js.Length - 2, 2); // remove last comma
-            js += "};\n";
+            js = js.Remove(js.Length - 2, 2); // remove last comma
+            js += "\n};\n";
 
             return js;
         }
 
-        private static Dictionary<string, string> base64Data = new Dictionary<string, string>();
+        private static Dictionary<string, string> base64Data = new();
     }
+
+#pragma warning restore CA1416 // Validate platform compatibility
 }

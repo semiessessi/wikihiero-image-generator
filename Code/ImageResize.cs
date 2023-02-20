@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace WHIG
 {
+#pragma warning disable CA1416 // Validate platform compatibility
     public static class ImageResize
     {
         public static bool ProcessRotateRight(string inPath, string outPath)
@@ -60,7 +61,7 @@ namespace WHIG
 
         public static bool ProcessSmallAndTallStack(string[] inputSymbols, string outDirectory, string outPath)
         {
-            List<Image> images = new List<Image>();
+            List<Image> images = new();
             foreach (string inPath in inputSymbols)
             {
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
@@ -128,7 +129,7 @@ namespace WHIG
 
         public static bool ProcessTallAndSmallStack(string[] inputSymbols, string outDirectory, string outPath)
         {
-            List<Image> images = new List<Image>();
+            List<Image> images = new();
             foreach (string inPath in inputSymbols)
             {
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
@@ -196,7 +197,7 @@ namespace WHIG
 
         public static bool ProcessBottomLeftTopRight(string[] inputSymbols, string outDirectory, string outPath)
         {
-            List<Image> images = new List<Image>();
+            List<Image> images = new();
             foreach (string inPath in inputSymbols)
             {
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
@@ -263,7 +264,7 @@ namespace WHIG
 
         public static bool ProcessSimpleTopRightBig(string[] inputSymbols, string outDirectory, string outPath)
         {
-            List<Image> images = new List<Image>();
+            List<Image> images = new();
             foreach (string inPath in inputSymbols)
             {
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
@@ -343,7 +344,7 @@ namespace WHIG
 
         public static bool ProcessStack(string[] inputSymbols, string outDirectory, string outPath)
         {
-            List<Image> images = new List<Image>();
+            List<Image> images = new();
             int z91count = 0;
             foreach(string inPath in inputSymbols)
             {
@@ -483,6 +484,13 @@ namespace WHIG
                     adjust += (int)(2.0 * Program.TargetSizePixels / 40.0);
                 }
                 else if ((index > 0)
+                    && (inputSymbols[index - 1] == "Aa1")
+                    && (inputSymbols[index] == "D52"))
+                {
+                    // add space after x for mt
+                    adjust += (int)(2.0 * Program.TargetSizePixels / 40.0);
+                }
+                else if ((index > 0)
                     && (inputSymbols[index - 1] == "Q3")
                     && (inputSymbols[index] == "O34"))
                 {
@@ -561,4 +569,6 @@ namespace WHIG
             return true;
         }
     }
+
+#pragma warning restore CA1416 // Validate platform compatibility
 }

@@ -214,8 +214,8 @@ namespace WHIG
             }
         }
 
-        private static HashSet<string> DoneSet = new HashSet<string>();
-        private static HashSet<string> UndoneSet = new HashSet<string>();
+        private static HashSet<string> DoneSet = new();
+        private static HashSet<string> UndoneSet = new();
         public readonly static string[] FullList = new string[]
             {
                 "a&A1",
@@ -1370,6 +1370,7 @@ namespace WHIG
             { "wr&r&t", new string[] { "G36", "D21", "X1" } },
             { "w&&t", new string[] { "G43", "X1" } },
             { "x&f&t", new string[]{ "Aa1", "I9", "X1" } },
+			{ "x&mt&t", new string[]{ "Aa1", "D52", "X1" } },
             { "x&r&t", new string[]{ "Aa1", "D21", "X1" } },
             { "Y1&A1", new string[]{ "Y1", "A1" } },
             { "Y1&n&f", new string[]{ "Y1", "N35", "I9" } },
