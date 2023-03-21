@@ -182,8 +182,16 @@ namespace WHIG
                 command = "..\\optipng.exe";
                 if(File.Exists("..\\optipng.exe") == false)
                 {
-                    Console.WriteLine("Could not find optipng.exe!");
-                    Console.WriteLine("You will need to make sure that it is added to your PATH for this feature to work.");
+                    command = "..\\..\\optipng.exe";
+                    if (File.Exists("..\\..\\optipng.exe") == false)
+                    {
+                        command = "..\\..\\..\\optipng.exe";
+                        if (File.Exists("..\\..\\..\\optipng.exe") == false)
+                        {
+                            Console.WriteLine("Could not find optipng.exe!");
+                            Console.WriteLine("You will need to make sure that it is added to your PATH for this feature to work.");
+                        }
+                    }
                 }
             }
 

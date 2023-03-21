@@ -46,10 +46,12 @@ namespace WHIG
             SizeOption.AddAlias("-size");
             SizeOption.AddAlias("--s");
             SizeOption.AddAlias("-s");
+            VariableNameOption.AddAlias("-variable");
             rootCommand.AddOption(JSOption);
             rootCommand.AddOption(OptiPNGOption);
             rootCommand.AddOption(OutputOption);
             rootCommand.AddOption(SizeOption);
+            rootCommand.AddOption(VariableNameOption);
 
             rootCommand.SetHandler(
                 (js, optimise, output, size, variableName) =>
