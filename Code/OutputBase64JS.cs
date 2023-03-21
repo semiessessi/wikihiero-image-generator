@@ -34,7 +34,7 @@ namespace WHIG
 
         public static string CreateJS(bool loadData)
         {
-            return CreateJSWithVariableName("lookup", loadData);
+            return CreateJSWithVariableName(Program.VariableName, loadData);
         }
 
         public static string CreateJSWithVariableName(string name, bool loadData)

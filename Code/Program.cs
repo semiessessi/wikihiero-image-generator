@@ -12,6 +12,7 @@ namespace WHIG
         public static bool SimpleMapping = false;
         public static bool GenerateBase64JS = false;
         public static bool OptiPNG = false;
+        public static string VariableName = "lookup";
 
         private static Option<string> OutputOption = new Option<string>(
             name: "--output",
@@ -25,6 +26,10 @@ namespace WHIG
             name: "--js",
             description: "Font size to use for the glyphs",
             getDefaultValue: () => false);
+        private static Option<string> VariableNameOption = new Option<string>(
+            name: "--variable",
+            description: "Variable name for JS",
+            getDefaultValue: () => "lookup");
         private static Option<bool> OptiPNGOption = new Option<bool>(
              name: "--optipng",
              description: "Font size to use for the glyphs",
@@ -47,7 +52,7 @@ namespace WHIG
             rootCommand.AddOption(SizeOption);
 
             rootCommand.SetHandler(
-                (js, optimise, output, size) =>
+                (js, optimise, output, size, variableName) =>
                 {
                     GenerateBase64JS = js;
                     OptiPNG = optimise;
@@ -65,7 +70,7 @@ namespace WHIG
 
                     Finish();
                 },
-                JSOption, OptiPNGOption, OutputOption, SizeOption);
+                JSOption, OptiPNGOption, OutputOption, SizeOption, VariableNameOption);
 
             return rootCommand.InvokeAsync(args).Result;
         }
