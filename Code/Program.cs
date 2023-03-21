@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CommandLine;
 using System.IO;
 
 namespace WHIG
@@ -12,26 +13,61 @@ namespace WHIG
         public static bool GenerateBase64JS = false;
         public static bool OptiPNG = false;
 
-        static void Main(string[] args)
+        private static Option<string> OutputOption = new Option<string>(
+            name: "--output",
+            description: "The path to write the images to",
+            getDefaultValue: () => ".\\out\\");
+        private static Option<int> SizeOption = new Option<int>(
+            name: "--size",
+            description: "Font size to use for the glyphs",
+            getDefaultValue: () => 40);
+        private static Option<bool> JSOption = new Option<bool>(
+            name: "--js",
+            description: "Font size to use for the glyphs",
+            getDefaultValue: () => false);
+        private static Option<bool> OptiPNGOption = new Option<bool>(
+             name: "--optipng",
+             description: "Font size to use for the glyphs",
+             getDefaultValue: () => false);
+
+        static int Main(string[] args)
         {
-            if (HandleHelp(args))
-            {
-                return;
-            }
+            RootCommand rootCommand = new RootCommand("Generate wikihiero images from hieroglyph images");
+            JSOption.AddAlias("-js");
+            OptiPNGOption.AddAlias("-optipng");
+            OutputOption.AddAlias("-output");
+            OutputOption.AddAlias("--o");
+            OutputOption.AddAlias("-o");
+            SizeOption.AddAlias("-size");
+            SizeOption.AddAlias("--s");
+            SizeOption.AddAlias("-s");
+            rootCommand.AddOption(JSOption);
+            rootCommand.AddOption(OptiPNGOption);
+            rootCommand.AddOption(OutputOption);
+            rootCommand.AddOption(SizeOption);
 
-            GatherParameters(args);
+            rootCommand.SetHandler(
+                (js, optimise, output, size) =>
+                {
+                    GenerateBase64JS = js;
+                    OptiPNG = optimise;
+                    OutputPath = output;
+                    TargetSizePixels = size;
+                    OutputImages.GenerateSimpleFromInputPath();
+                    if (SimpleMapping) // done
+                    {
+                        Finish();
+                        return;
+                    }
 
-            OutputImages.GenerateSimpleFromInputPath();
-            if(SimpleMapping) // done
-            {
-                Finish();
-                return;
-            }
+                    OutputImages.GenerateReplacementsAndRotations();
+                    OutputImages.GenerateLigaturesAndStacks();
 
-            OutputImages.GenerateReplacementsAndRotations();
-            OutputImages.GenerateLigaturesAndStacks();
+                    Finish();
+                },
+                JSOption, OptiPNGOption, OutputOption, SizeOption);
 
-            Finish();
+            return rootCommand.InvokeAsync(args).Result;
         }
 
         private static void Finish()
@@ -48,97 +84,6 @@ namespace WHIG
             }
 
             OutputImages.FinalReport();
-        }
-
-        private static bool HandleHelp(string[] args)
-        {
-            foreach (string arg in args)
-            {
-                string lower = arg.ToLower();
-                if ((lower == "/?")
-                    || (lower == "-?")
-                    || (lower == "--?")
-                    || (lower == "/h")
-                    || (lower == "-h")
-                    || (lower == "--h")
-                    || (lower == "help") // TODO: if there is a path called help?
-                    || (lower == "/help")
-                    || (lower == "-help")
-                    || (lower == "--help"))
-                {
-                    DisplayHelp();
-                    return true;
-                }
-            }
-
-            //if (args.Length == 0)
-            //{
-            //    Console.WriteLine("Error: insufficient parameters provided");
-            //    DisplayHelp();
-            //}
-
-            return false;
-        }
-
-        private static void GatherParameters(string[] args)
-        {
-            foreach (string arg in args)
-            {
-                string lower = arg.ToLower();
-                if (lower.StartsWith("-s")
-                    || lower.StartsWith("-size")
-                    || lower.StartsWith("--s")
-                    || lower.StartsWith("--size")
-                    || lower.StartsWith("/s")
-                    || lower.StartsWith("/size"))
-                {
-                    if (lower.Contains("="))
-                    {
-                        string[] split = lower.Split("=");
-                        TargetSizePixels = (split.Length > 1) ? Convert.ToInt32(split[1]) : TargetSizePixels;
-                    }
-                    else
-                    {
-                        // TODO:
-                        Console.WriteLine("missing '=' in argument: \"" + arg + "\"");
-                    }
-                }
-                else if (arg.StartsWith("-optipng")
-                    || arg.StartsWith("--optipng")
-                    || arg.StartsWith("/optipng"))
-                {
-                    OptiPNG = true;
-                }
-                else if (arg.StartsWith("-o")
-                    || arg.StartsWith("-output")
-                    || arg.StartsWith("--o")
-                    || arg.StartsWith("--output")
-                    || arg.StartsWith("/o")
-                    || arg.StartsWith("/output"))
-                {
-                    if (arg.Contains("="))
-                    {
-                        string[] split = arg.Split("=");
-                        OutputPath = (split.Length > 1) ? split[1] : OutputPath;
-                    }
-                    else
-                    {
-                        // TODO: just trim the start instead...
-                        Console.WriteLine("missing '=' in argument: \"" + arg + "\"");
-                    }
-                }
-                else if (arg.StartsWith("-js")
-                    || arg.StartsWith("--js")
-                    || arg.StartsWith("/js"))
-                {
-                    GenerateBase64JS = true;
-                }
-            }
-        }
-
-        private static void DisplayHelp()
-        {
-            Console.WriteLine("usage: wikihiero-image-generator -output=<path> -size=<pixels> [-help] [-js] [-optipng]");
         }
     }
 }
