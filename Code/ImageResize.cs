@@ -13,6 +13,10 @@ namespace WHIG
     {
         public static bool ProcessRotateRight(string inPath, string outPath)
         {
+            if (File.Exists(inPath) == false)
+            {
+                return false;
+            }
             Image image = Image.FromFile(inPath);
             if (image == null)
             {
@@ -37,6 +41,10 @@ namespace WHIG
 
         public static bool ProcessRotateLeft(string inPath, string outPath)
         {
+            if (File.Exists(inPath) == false)
+            {
+                return false;
+            }
             Image image = Image.FromFile(inPath);
             if (image == null)
             {
@@ -65,6 +73,10 @@ namespace WHIG
             foreach (string inPath in inputSymbols)
             {
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
+                if (File.Exists(inputPath) == false)
+                {
+                    return false;
+                }
                 Image image = Image.FromFile(inputPath);
                 if (image == null)
                 {
@@ -133,6 +145,10 @@ namespace WHIG
             foreach (string inPath in inputSymbols)
             {
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
+                if (File.Exists(inputPath) == false)
+                {
+                    return false;
+                }
                 Image image = Image.FromFile(inputPath);
                 if (image == null)
                 {
@@ -201,6 +217,10 @@ namespace WHIG
             foreach (string inPath in inputSymbols)
             {
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
+                if (File.Exists(inputPath) == false)
+                {
+                    return false;
+                }
                 Image image = Image.FromFile(inputPath);
                 if (image == null)
                 {
@@ -268,6 +288,10 @@ namespace WHIG
             foreach (string inPath in inputSymbols)
             {
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
+                if (File.Exists(inputPath) == false)
+                {
+                    return false;
+                }
                 Image image = Image.FromFile(inputPath);
                 if (image == null)
                 {
@@ -353,6 +377,10 @@ namespace WHIG
                     ++z91count;
                 }
                 string inputPath = Path.Join(outDirectory, "hiero_" + inPath + ".png");
+                if(File.Exists(inputPath) == false)
+                {
+                    return false;
+                }
                 Image image = Image.FromFile(inputPath);
                 if (image == null)
                 {
