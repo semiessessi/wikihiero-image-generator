@@ -34,7 +34,12 @@ namespace WHIG
 
         public static string CreateJS(bool loadData)
         {
-            string js = "var lookup = {\n";
+            return CreateJSWithVariableName("lookup", loadData);
+        }
+
+        public static string CreateJSWithVariableName(string name, bool loadData)
+        {
+            string js = "var " + name + " = {\n";
             if (loadData == false)
             {
                 foreach (KeyValuePair<string, string> pair in base64Data)
