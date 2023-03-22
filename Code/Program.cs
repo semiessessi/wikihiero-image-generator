@@ -60,6 +60,7 @@ namespace WHIG
                     OptiPNG = optimise;
                     OutputPath = output;
                     TargetSizePixels = size;
+                    VariableName = variableName;
                     OutputImages.GenerateSimpleFromInputPath();
                     if (SimpleMapping) // done
                     {
